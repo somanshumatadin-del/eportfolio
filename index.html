@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somanshu Matadin — E-Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#06060f;
+  --surface:#0e0e1c;
+  --card:#13132a;
+  --border:#2a2a4a;
+  --accent:#7c3aed;
+  --accent2:#06b6d4;
+  --accent3:#f59e0b;
+  --text:#f0f0ff;
+  --muted:#8888aa;
+  --grad: linear-gradient(135deg,#7c3aed,#06b6d4);
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px;}
+
+/* ANIMATED BACKGROUND */
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18;animation:float 12s ease-in-out infinite;}
+.orb1{width:600px;height:600px;background:#7c3aed;top:-200px;left:-200px;animation-delay:0s;}
+.orb2{width:500px;height:500px;background:#06b6d4;bottom:-200px;right:-100px;animation-delay:-4s;}
+.orb3{width:400px;height:400px;background:#f59e0b;top:40%;left:50%;animation-delay:-8s;}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-30px) scale(1.05);}66%{transform:translate(-20px,20px) scale(0.95);}  }
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2.5rem;
+  background:rgba(6,6,15,0.7);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Space Mono',monospace;
+  font-size:1rem;color:var(--accent2);
+  letter-spacing:2px;text-transform:uppercase;
+}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:0.85rem;
+  font-weight:500;letter-spacing:1px;text-transform:uppercase;
+  transition:color .3s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:var(--grad);transition:width .3s;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-links a:hover::after{width:100%;}
+
+/* SECTIONS */
+section{
+  position:relative;z-index:1;
+  min-height:100vh;padding:7rem 2rem 5rem;
+  max-width:1200px;margin:0 auto;
+}
+
+/* FADE-IN ANIMATION */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ========== HOME ========== */
+#home{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;min-height:100vh;padding-top:5rem;
+}
+.hero-badge{
+  font-family:'Space Mono',monospace;font-size:0.75rem;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent2);border:1px solid var(--accent2);
+  padding:.4rem 1.2rem;border-radius:20px;margin-bottom:2rem;
+  animation:pulse-border 3s ease-in-out infinite;
+}
+@keyframes pulse-border{0%,100%{box-shadow:0 0 0 0 rgba(6,182,212,0.4);}50%{box-shadow:0 0 0 8px rgba(6,182,212,0);}}
+.hero-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,7rem);
+  font-weight:900;
+  line-height:1;
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;
+  animation:name-reveal 1.2s cubic-bezier(.16,1,.3,1) forwards;
+  opacity:0;transform:scale(0.9);
+}
+@keyframes name-reveal{to{opacity:1;transform:scale(1);}}
+.hero-title{
+  font-size:1.2rem;color:var(--muted);letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:2rem;
+  font-family:'Space Mono',monospace;
+  animation:slide-up 1s ease .4s forwards;opacity:0;transform:translateY(20px);
+}
+@keyframes slide-up{to{opacity:1;transform:translateY(0);}}
+.hero-statement{
+  max-width:680px;font-size:1.15rem;line-height:1.8;
+  color:#c0c0dd;margin-bottom:3rem;
+  border-left:3px solid var(--accent);
+  padding-left:1.5rem;text-align:left;
+  animation:slide-up 1s ease .6s forwards;opacity:0;transform:translateY(20px);
+}
+.hero-photo{
+  width:160px;height:160px;border-radius:50%;
+  border:3px solid transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;margin:0 auto 2rem;
+  overflow:hidden;
+  animation:spin-in 1s cubic-bezier(.16,1,.3,1) .2s forwards;opacity:0;
+  position:relative;
+}
+.hero-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.hero-photo .placeholder-photo{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:var(--muted);font-size:.75rem;font-family:'Space Mono',monospace;
+}
+.hero-photo .placeholder-photo .icon{font-size:2.5rem;}
+@keyframes spin-in{from{opacity:0;transform:rotate(-10deg) scale(.8);}to{opacity:1;transform:rotate(0) scale(1);}}
+.hero-cta{
+  display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
+  animation:slide-up 1s ease .8s forwards;opacity:0;transform:translateY(20px);
+}
+.btn{
+  padding:.8rem 2rem;border-radius:50px;font-size:.9rem;font-weight:600;
+  text-decoration:none;cursor:pointer;transition:all .3s;letter-spacing:.5px;
+  font-family:'DM Sans',sans-serif;
+}
+.btn-primary{
+  background:var(--grad);color:#fff;border:none;
+  box-shadow:0 4px 20px rgba(124,58,237,0.4);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(124,58,237,0.6);}
+.btn-outline{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border);
+}
+.btn-outline:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-3px);}
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:var(--muted);font-size:.75rem;font-family:'Space Mono',monospace;
+  animation:bounce 2s ease-in-out infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+.scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);}
+
+/* SECTION HEADERS */
+.section-tag{
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  letter-spacing:3px;color:var(--accent2);text-transform:uppercase;
+  margin-bottom:.8rem;display:block;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3.5rem);font-weight:700;
+  line-height:1.1;margin-bottom:1rem;
+}
+.section-title span{
+  background:var(--grad);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-divider{
+  width:60px;height:3px;background:var(--grad);
+  border-radius:2px;margin-bottom:3rem;
+}
+
+/* ========== ABOUT ========== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.about-text p{color:#c0c0dd;line-height:1.9;margin-bottom:1.2rem;font-size:1rem;}
+.goal-box{
+  background:var(--card);border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+  border-radius:12px;padding:1.5rem;margin-top:1.5rem;
+}
+.goal-box p{color:#c0c0dd;font-style:italic;line-height:1.8;margin:0;}
+.about-cards{display:flex;flex-direction:column;gap:1rem;}
+.info-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.2rem 1.5rem;
+  transition:border-color .3s,transform .3s;
+}
+.info-card:hover{border-color:var(--accent);transform:translateX(6px);}
+.info-card h4{
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;
+}
+.info-card ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;}
+.info-card ul li{
+  background:rgba(124,58,237,0.15);color:#c0c0ff;
+  padding:.3rem .8rem;border-radius:20px;font-size:.85rem;
+  border:1px solid rgba(124,58,237,0.3);
+}
+
+/* ========== SKILLS ========== */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
+.skill-category{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.8rem;
+  transition:transform .3s,box-shadow .3s;
+}
+.skill-category:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.4);}
+.skill-icon{font-size:2rem;margin-bottom:1rem;}
+.skill-category h3{
+  font-family:'Playfair Display',serif;font-size:1.3rem;
+  margin-bottom:1.2rem;
+}
+.skill-bar-wrap{margin-bottom:.8rem;}
+.skill-bar-wrap label{
+  display:flex;justify-content:space-between;
+  font-size:.85rem;color:var(--muted);margin-bottom:.4rem;
+}
+.skill-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+.skill-fill{
+  height:100%;border-radius:3px;background:var(--grad);width:0;
+  transition:width 1.5s cubic-bezier(.16,1,.3,1);
+}
+.cert-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);
+  color:#fbbf24;padding:.5rem 1rem;border-radius:20px;font-size:.85rem;
+  font-weight:600;margin:.4rem .4rem 0 0;
+  font-family:'Space Mono',monospace;
+}
+
+/* SOFT SKILLS TABLE */
+.soft-table{width:100%;border-collapse:collapse;margin-top:1.5rem;}
+.soft-table th{
+  background:rgba(124,58,237,0.2);color:var(--accent2);
+  padding:.8rem 1rem;text-align:left;font-size:.8rem;
+  letter-spacing:1px;text-transform:uppercase;
+  font-family:'Space Mono',monospace;
+}
+.soft-table td{padding:.8rem 1rem;border-bottom:1px solid var(--border);color:#c0c0dd;font-size:.9rem;}
+.soft-table tr:hover td{background:rgba(255,255,255,.03);}
+
+/* ========== PROJECTS ========== */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;}
+.project-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.8rem;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+  position:relative;overflow:hidden;
+}
+.project-card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--grad);opacity:0;transition:opacity .3s;z-index:0;
+}
+.project-card:hover::before{opacity:0.05;}
+.project-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.4);border-color:var(--accent);}
+.project-card>*{position:relative;z-index:1;}
+.project-num{
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  color:var(--accent3);letter-spacing:2px;margin-bottom:.8rem;
+}
+.project-card h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.8rem;}
+.project-card p{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:1rem;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.skill-tag{
+  background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);
+  color:var(--accent2);padding:.3rem .8rem;border-radius:12px;font-size:.78rem;
+}
+.role-badge{
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  color:var(--accent);border:1px solid var(--accent);
+  padding:.2rem .7rem;border-radius:10px;margin-bottom:.8rem;display:inline-block;
+}
+
+/* ========== GALLERY ========== */
+#gallery{
+  max-width:1200px;margin:0 auto;padding:7rem 2rem 5rem;
+  position:relative;z-index:1;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1rem;margin-top:2rem;
+}
+.gallery-item{
+  aspect-ratio:1;background:var(--card);
+  border:1px dashed var(--border);border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.5rem;color:var(--muted);font-size:.8rem;
+  font-family:'Space Mono',monospace;text-align:center;padding:1rem;
+  transition:border-color .3s,transform .3s;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.gallery-item:hover{border-color:var(--accent2);transform:scale(1.03);}
+.gallery-item .gallery-icon{font-size:2.5rem;opacity:.5;}
+.gallery-item span{font-size:.7rem;opacity:.6;}
+.gallery-add-hint{
+  display:block;text-align:center;color:var(--muted);
+  font-size:.8rem;font-family:'Space Mono',monospace;
+  margin-top:1rem;opacity:.6;
+}
+
+/* ========== REFLECTION ========== */
+.reflection-timeline{position:relative;padding-left:2rem;}
+.reflection-timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);
+}
+.timeline-item{
+  position:relative;margin-bottom:2.5rem;
+}
+.timeline-item::before{
+  content:'';position:absolute;left:-2.4rem;top:.4rem;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg);
+  box-shadow:0 0 0 4px rgba(124,58,237,0.3);
+}
+.timeline-item h3{
+  font-family:'Playfair Display',serif;font-size:1.2rem;
+  margin-bottom:.6rem;color:var(--text);
+}
+.timeline-item p{color:#c0c0dd;line-height:1.8;font-size:.95rem;}
+.timeline-item ul{color:#c0c0dd;line-height:2;font-size:.95rem;padding-left:1.2rem;}
+
+/* ========== CONTACT ========== */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem;}
+.contact-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;display:flex;align-items:center;gap:1.5rem;
+  transition:border-color .3s,transform .3s;
+}
+.contact-card:hover{border-color:var(--accent2);transform:translateY(-4px);}
+.contact-icon{font-size:2rem;}
+.contact-card h4{color:var(--muted);font-size:.75rem;letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:.3rem;}
+.contact-card p{color:var(--text);font-size:1rem;}
+.contact-card a{color:var(--accent2);text-decoration:none;}
+
+/* ========== FOOTER ========== */
+footer{
+  position:relative;z-index:1;text-align:center;
+  padding:2.5rem;border-top:1px solid var(--border);
+  color:var(--muted);font-size:.85rem;font-family:'Space Mono',monospace;
+}
+footer span{color:var(--accent);}
+
+/* FULL-WIDTH SECTION WRAPPERS */
+.section-wrapper{
+  position:relative;z-index:1;
+  padding:7rem 2rem 5rem;
+}
+.section-inner{max-width:1200px;margin:0 auto;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .about-grid,.contact-grid{grid-template-columns:1fr;}
+  nav .nav-links{display:none;}
+  .hero-name{font-size:3rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND ORBS -->
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SM Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#sem1">Semester 1</a></li>
+    <li><a href="#sem2">Semester 2</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ======================== HOME ======================== -->
+<section id="home" style="max-width:1200px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;position:relative;z-index:1;">
+
+  <div class="hero-badge">Computer Science Student · University of Mauritius</div>
+
+  <!-- PROFILE PHOTO -->
+  <div class="hero-photo">
+    <!-- PLACEHOLDER: Replace src below with your actual photo path or URL -->
+    <!-- <img src="YOUR_PHOTO.jpg" alt="Somanshu Matadin"> -->
+    <div class="placeholder-photo">
+      <div class="icon">📷</div>
+      <span>Your Photo Here</span>
+    </div>
+  </div>
+
+  <h1 class="hero-name">Somanshu Matadin</h1>
+  <p class="hero-title">Aspiring Network &amp; Cybersecurity Specialist</p>
+
+  <blockquote class="hero-statement reveal">
+    "I am a Computer Science student focused on developing strong networking and cybersecurity foundations. My goal is to build practical, real-world skills that allow me to design, secure, and troubleshoot modern systems."
+  </blockquote>
+
+  <div class="hero-cta">
+    <a href="#about" class="btn btn-primary">Explore My Journey</a>
+    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ======================== ABOUT ======================== -->
+<div class="section-wrapper" id="about">
+<div class="section-inner">
+  <span class="section-tag reveal">02 / Who I Am</span>
+  <h2 class="section-title reveal">About <span>Me</span></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>My name is <strong style="color:var(--text);">Somanshu Matadin</strong> and I am a Computer Science student with a passion for IT systems, networking, and cybersecurity. I am driven by a genuine curiosity for understanding how digital systems work — and more importantly, how to protect them.</p>
+      <p>I am someone who values self-learning and persistence. Cybersecurity and networking are fields that evolve constantly, and I embrace that challenge by continuously upskilling beyond the classroom.</p>
+      <p>Outside of academics, I enjoy exploring practical problem-solving — debugging code, analysing network configurations, and understanding how real-world threats operate.</p>
+
+      <div class="goal-box">
+        <p>"My long-term goal is to become a cybersecurity professional, starting with networking fundamentals and progressively moving into ethical hacking and system security."</p>
+      </div>
+    </div>
+
+    <div class="about-cards reveal">
+      <div class="info-card">
+        <h4>🎯 Interests</h4>
+        <ul>
+          <li>Network Infrastructure</li>
+          <li>Cybersecurity</li>
+          <li>Problem-Solving</li>
+          <li>System Optimisation</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>💪 Strengths</h4>
+        <ul>
+          <li>Logical Thinking</li>
+          <li>Persistence</li>
+          <li>Self-Learning</li>
+          <li>Analytical Mind</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>📈 Areas to Grow</h4>
+        <ul>
+          <li>Real-world experience</li>
+          <li>Advanced networking skills</li>
+          <li>Public speaking confidence</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>🎓 Institution</h4>
+        <ul>
+          <li>University of Mauritius</li>
+          <li>BSc Computer Science</li>
+          <!-- PLACEHOLDER: Add your year of study -->
+          <li>Year 1</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================== SKILLS ======================== -->
+<div class="section-wrapper" id="skills">
+<div class="section-inner">
+  <span class="section-tag reveal">03 / What I Know</span>
+  <h2 class="section-title reveal">Academic Achievements <span>&amp; Skills</span></h2>
+  <div class="section-divider reveal"></div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="reveal" style="margin-bottom:2.5rem;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1rem;">🏆 Certifications</h3>
+    <div>
+      <span class="cert-badge">⭐ CompTIA Network+</span>
+      <span class="cert-badge" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.4);color:var(--accent2);">🔄 CompTIA Security+ (In Progress)</span>
+      <span class="cert-badge" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.4);color:var(--accent2);">🔄 CompTIA Linux+ (In Progress)</span>
+    </div>
+  </div>
+
+  <!-- TECHNICAL SKILLS -->
+  <div class="skills-grid">
+    <div class="skill-category reveal">
+      <div class="skill-icon">🌐</div>
+      <h3>Networking</h3>
+      <div class="skill-bar-wrap">
+        <label><span>IP Addressing &amp; Subnetting</span><span>70%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <label><span>Routing &amp; Switching</span><span>60%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <label><span>Network Troubleshooting</span><span>65%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-category reveal">
+      <div class="skill-icon">💻</div>
+      <h3>Programming</h3>
+      <div class="skill-bar-wrap">
+        <label><span>Python (Basic–Intermediate)</span><span>60%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <label><span>Database Systems (SQL)</span><span>55%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="55"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <label><span>Problem-Solving Logic</span><span>70%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-category reveal">
+      <div class="skill-icon">🔐</div>
+      <h3>Cybersecurity</h3>
+      <div class="skill-bar-wrap">
+        <label><span>Threat Awareness</span><span>55%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="55"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <label><span>Security Principles</span><span>50%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="50"></div></div>
+      </div>
+      <div class="skill-bar-wrap">
+        <label><span>Risk Management Basics</span><span>45%</span></label>
+        <div class="skill-bar"><div class="skill-fill" data-width="45"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOFT SKILLS -->
+  <div class="reveal" style="margin-top:3rem;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.5rem;">🤝 Soft Skills</h3>
+    <table class="soft-table">
+      <thead>
+        <tr><th>Skill</th><th>Evidence</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Communication</td><td>Group presentations and role plays</td></tr>
+        <tr><td>Teamwork</td><td>Team building activities &amp; group assignments</td></tr>
+        <tr><td>Problem-Solving</td><td>Debugging code &amp; resolving system errors</td></tr>
+        <tr><td>Adaptability</td><td>Learning new tools independently (CompTIA path)</td></tr>
+        <tr><td>Professionalism</td><td>CRM role play and interview simulation</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ======================== PROJECTS SEM 1 ======================== -->
+<div class="section-wrapper" id="sem1">
+<div class="section-inner">
+  <span class="section-tag reveal">04 / First Semester</span>
+  <h2 class="section-title reveal">Projects — <span>Semester 1</span></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 01</div>
+      <div class="role-badge">Organiser &amp; Participant</div>
+      <h3>🏃 Scavenger Hunt Activity</h3>
+      <p>A collaborative activity designed to strengthen teamwork, communication, and coordination under time pressure. Involved planning routes, assigning roles, and working dynamically as a team.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">REFLECTION:</strong><br>
+        Learned the importance of clear communication and trust in a team environment.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Teamwork</span>
+        <span class="skill-tag">Communication</span>
+        <span class="skill-tag">Coordination</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 02</div>
+      <div class="role-badge">Team Member</div>
+      <h3>🤝 Team Building Exercise</h3>
+      <p>Participated in structured team-building activities focused on group dynamics, collaborative decision-making, and trust. These exercises highlighted how effective teams operate under constraints.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">KEY LESSON:</strong><br>
+        Learned the importance of clear instructions and active listening within a group.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Collaboration</span>
+        <span class="skill-tag">Leadership</span>
+        <span class="skill-tag">Active Listening</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 03</div>
+      <div class="role-badge">Lead Planner</div>
+      <h3>💼 Business Plan — IT Support Service</h3>
+      <p>Developed a business plan for an IT support service targeting small businesses in Mauritius. Covered market analysis, service offerings, pricing, and a basic financial projection.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">OUTCOME:</strong><br>
+        Gained insight into how IT skills translate into real business value.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Planning</span>
+        <span class="skill-tag">Market Analysis</span>
+        <span class="skill-tag">Presentation</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 04</div>
+      <div class="role-badge">Presenter</div>
+      <h3>📊 Presentation: Basic Networking Concepts</h3>
+      <p>Delivered a group presentation explaining fundamental networking concepts such as IP addressing, protocols, and network topologies — tailored for a non-technical audience.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">SKILLS GAINED:</strong><br>
+        Improved public speaking and the ability to simplify complex technical information.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Public Speaking</span>
+        <span class="skill-tag">Technical Communication</span>
+        <span class="skill-tag">Networking</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================== PROJECTS SEM 2 ======================== -->
+<div class="section-wrapper" id="sem2">
+<div class="section-inner">
+  <span class="section-tag reveal">05 / Second Semester</span>
+  <h2 class="section-title reveal">Projects — <span>Semester 2</span></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 01</div>
+      <div class="role-badge">Researcher &amp; Author</div>
+      <h3>📝 Research Paper: Cybersecurity in Modern Business</h3>
+      <p>Wrote a research paper examining the importance of cybersecurity for modern businesses, covering threat landscapes, vulnerability categories, and risk management frameworks.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">WHAT I LEARNED:</strong><br>
+        Deepened understanding of the threat landscape and the business impact of security breaches.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Research</span>
+        <span class="skill-tag">Cybersecurity</span>
+        <span class="skill-tag">Academic Writing</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 02</div>
+      <div class="role-badge">IT Support Representative</div>
+      <h3>🎭 CRM Role Play — Client IT Issue</h3>
+      <p>Simulated a real client interaction where I acted as IT support resolving a customer's technical issue. Focused on professionalism, empathy, and effective problem communication.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">SKILLS DEVELOPED:</strong><br>
+        Professional communication, client empathy, and structured problem resolution.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Client Communication</span>
+        <span class="skill-tag">Professionalism</span>
+        <span class="skill-tag">CRM</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 03</div>
+      <div class="role-badge">Interviewee</div>
+      <h3>🎤 Interview Simulation</h3>
+      <p>Participated in a simulated interview covering both technical competencies and behavioural HR questions. Practiced structuring answers using the STAR method and managing interview nerves.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">OUTCOME:</strong><br>
+        Increased confidence and a better framework for articulating my strengths under pressure.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Confidence</span>
+        <span class="skill-tag">STAR Method</span>
+        <span class="skill-tag">Self-Presentation</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">PROJECT 04</div>
+      <div class="role-badge">Presenter</div>
+      <h3>📡 Presentation: Network Security Basics</h3>
+      <p>Built on my Semester 1 presentation skills to deliver a more structured and confident talk on network security — covering firewalls, encryption, and basic threat prevention strategies.</p>
+      <div style="color:#c0c0dd;font-size:.88rem;line-height:1.8;margin-bottom:1rem;">
+        <strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:.75rem;">IMPROVEMENT FROM SEM 1:</strong><br>
+        More structured delivery, better pacing, and noticeably more confident engagement with the audience.
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Network Security</span>
+        <span class="skill-tag">Delivery</span>
+        <span class="skill-tag">Progression</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ======================== GALLERY ======================== -->
+<div style="position:relative;z-index:1;padding:7rem 2rem 5rem;" id="gallery">
+<div style="max-width:1200px;margin:0 auto;">
+  <span class="section-tag reveal">06 / Evidence &amp; Proof</span>
+  <h2 class="section-title reveal">Activity <span>Gallery</span></h2>
+  <div class="section-divider reveal"></div>
+  <p class="reveal" style="color:var(--muted);margin-bottom:2rem;font-size:.95rem;">Visual proof of my activities, events, and achievements throughout the year. Add your photos and screenshots here.</p>
+
+  <div class="gallery-grid reveal">
+    <!-- PLACEHOLDER GALLERY ITEMS — Replace each with <img> tags or real photos -->
+    <div class="gallery-item">
+      <div class="gallery-icon">📸</div>
+      <strong style="color:var(--muted);">Scavenger Hunt</strong>
+      <span>Add photo here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">🤝</div>
+      <strong style="color:var(--muted);">Team Building</strong>
+      <span>Add photo here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">💼</div>
+      <strong style="color:var(--muted);">Business Plan</strong>
+      <span>Add screenshot here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">📊</div>
+      <strong style="color:var(--muted);">Presentation Sem 1</strong>
+      <span>Add photo here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">📝</div>
+      <strong style="color:var(--muted);">Research Paper</strong>
+      <span>Add screenshot here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">🎭</div>
+      <strong style="color:var(--muted);">CRM Role Play</strong>
+      <span>Add photo here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">🎤</div>
+      <strong style="color:var(--muted);">Interview Simulation</strong>
+      <span>Add photo here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">📡</div>
+      <strong style="color:var(--muted);">Presentation Sem 2</strong>
+      <span>Add photo here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">⭐</div>
+      <strong style="color:var(--muted);">CompTIA Network+</strong>
+      <span>Add certificate here</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">➕</div>
+      <strong style="color:var(--muted);">Your Photo</strong>
+      <span>Add any activity</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">➕</div>
+      <strong style="color:var(--muted);">Your Photo</strong>
+      <span>Add any activity</span>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-icon">➕</div>
+      <strong style="color:var(--muted);">Your Photo</strong>
+      <span>Add any activity</span>
+    </div>
+  </div>
+  <span class="gallery-add-hint reveal">💡 To add photos: replace each gallery-item div with &lt;img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:12px;"&gt;</span>
+</div>
+</div>
+
+<!-- ======================== REFLECTION ======================== -->
+<div class="section-wrapper" id="reflection">
+<div class="section-inner">
+  <span class="section-tag reveal">07 / My Growth Story</span>
+  <h2 class="section-title reveal">Reflection &amp; <span>Self-Assessment</span></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="reflection-timeline reveal">
+
+    <div class="timeline-item">
+      <h3>📍 Where I Started</h3>
+      <p>"At the beginning of this module, I had limited understanding of professional communication and business-related skills in IT. I was primarily focused on technical content and had not deeply considered the role communication plays in a technology career."</p>
+    </div>
+
+    <div class="timeline-item">
+      <h3>⚠️ Challenges I Faced</h3>
+      <ul>
+        <li>Public speaking anxiety during presentations</li>
+        <li>Limited confidence when engaging with clients or peers professionally</li>
+        <li>Bridging the gap between technical knowledge and communicating it clearly</li>
+        <li>Managing time between coursework and personal certification study</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <h3>🧩 Technical Growth</h3>
+      <p>Through my coursework and CompTIA Network+ preparation, I developed a much more solid understanding of networking fundamentals. My research paper on cybersecurity also introduced me to real-world threat models and risk management concepts that I had only read about abstractly before.</p>
+    </div>
+
+    <div class="timeline-item">
+      <h3>🗣️ Communication Growth</h3>
+      <p>My Semester 2 presentation was noticeably more confident and better structured than my first. The CRM role play and interview simulation pushed me well outside my comfort zone — but they were the most valuable experiences because they directly prepared me for professional environments.</p>
+    </div>
+
+    <div class="timeline-item">
+      <h3>💡 Key Lessons Learned</h3>
+      <ul>
+        <li>Communication is as critical as technical skill in IT careers</li>
+        <li>IT is not only about code — it involves people, systems, and professional relationships</li>
+        <li>Continuous learning is not optional in this field; it is the baseline</li>
+        <li>Self-awareness about weaknesses is a strength, not a vulnerability</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <h3>🚀 Future Application</h3>
+      <p>"I will use the communication and professional skills gained in this module alongside my technical certifications to present myself confidently in professional environments. My goal is to enter the cybersecurity field with both the technical and human skills necessary to succeed."</p>
+    </div>
+
+    <div class="timeline-item">
+      <h3>📋 My Self-Improvement Plan</h3>
+      <ul>
+        <li>Complete CompTIA Security+ and Linux+ certifications</li>
+        <li>Gain hands-on networking experience through home labs and simulations</li>
+        <li>Practise professional communication regularly through presentations and writing</li>
+        <li>Build a stronger portfolio of projects that demonstrate real-world application</li>
+        <li>Stay current with cybersecurity news and emerging threats</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ======================== CONTACT ======================== -->
+<div class="section-wrapper" id="contact">
+<div class="section-inner">
+  <span class="section-tag reveal">08 / Reach Out</span>
+  <h2 class="section-title reveal">Get In <span>Touch</span></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-card">
+      <div class="contact-icon">📧</div>
+      <div>
+        <h4>Email</h4>
+        <!-- PLACEHOLDER: Replace with your actual email -->
+        <p><a href="mailto:your.email@example.com">your.email@example.com</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">🏛️</div>
+      <div>
+        <h4>Institution</h4>
+        <p>University of Mauritius</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">💼</div>
+      <div>
+        <h4>LinkedIn</h4>
+        <!-- PLACEHOLDER: Replace with your LinkedIn URL -->
+        <p><a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📍</div>
+      <div>
+        <h4>Location</h4>
+        <p>Mauritius 🇲🇺</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Designed &amp; built by <span>Somanshu Matadin</span> · E-Portfolio 2026 · University of Mauritius</p>
+</footer>
+
+<script>
+// Intersection Observer for reveal animations
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // Animate skill bars when visible
+      e.target.querySelectorAll('.skill-fill').forEach(bar=>{
+        bar.style.width = bar.dataset.width + '%';
+      });
+    }
+  });
+},{threshold:0.15});
+reveals.forEach(r=>observer.observe(r));
+
+// Also trigger skill bars for already-visible sections
+document.querySelectorAll('.skill-fill').forEach(bar=>{
+  const section = bar.closest('.reveal');
+  if(!section) bar.style.width = bar.dataset.width + '%';
+});
+
+// Active nav link highlight on scroll
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let current = '';
+  sections.forEach(s=>{
+    if(window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a=>{
+    a.style.color = a.getAttribute('href') === '#'+current ? 'var(--accent2)' : '';
+  });
+});
+
+// Smooth gallery item hover ripple
+document.querySelectorAll('.gallery-item').forEach(item=>{
+  item.addEventListener('mouseenter',()=>{
+    item.style.background='rgba(124,58,237,0.1)';
+  });
+  item.addEventListener('mouseleave',()=>{
+    item.style.background='var(--card)';
+  });
+});
+</script>
+</body>
+</html>
